@@ -10,7 +10,10 @@ class Posts extends Component {
         super(props);
         this.state = {
             posts:[],
+            postListClass:"card"
         }
+
+        this.togglepostListClass = this.togglepostListClass.bind(this)
         
 
     }
@@ -75,10 +78,27 @@ class Posts extends Component {
         
     }
 
+    togglepostListClass(event){
+        event.preventDefault()
+        let currentListClass = this.state.postListClass
+        if (currentListClass === ""){
+            this.setState({
+                postListClass:"card"
+            })
+            
+        }else{
+            this.setState({
+                postListClass:""
+            })
+        }
+
+    }
+
 
     componentDidMount(){
         this.setState({
-            posts:[]
+            posts:[],
+            postListClass:"card"
         })
         
         this.loadPosts();  // call the method created above
@@ -86,16 +106,19 @@ class Posts extends Component {
     render() {
 
         const {posts} = this.state
+        
+        const {postListClass} = this.state
 
         console.log(this.state)
         return (
             <div>
                 <h1>this  is the posts home</h1>
+                <button onClick={this.togglepostListClass}>toggle button</button> 
                 {/* {posts.length >0 ? '':<p>No posts pound!!</p>} */}
                 
                 {posts.length > 0 ? posts.map((postItem, index)=>{
                     return(
-                        <PostInline post={postItem}/>
+                        <PostInline post={postItem} elClass={postListClass} />
                     )
 
                 }):<p>No posts pound!!</p>}
