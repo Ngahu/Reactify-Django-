@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 
 import 'whatwg-fetch'
 import  cookie  from 'react-cookies';
+import PostInline from './PostInline';
 
 
 class Posts extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            posts:[],
+        }
         
 
     }
 
     loadPosts(){
         let  endpoint = '/api/posts/'
+        let thisComp = this
         let lookupOptions = {
             method:"GET",
             headers:{
@@ -25,8 +30,11 @@ class Posts extends Component {
                 return response.json()
             }).then(function(responseData){
                 console.log(responseData)
+                thisComp.setState({
+                    posts:responseData
+                })
             }).catch(function(error){
-                console.log("Error", error)
+                console.log("Error",error)
             })
     }
 
@@ -69,13 +77,28 @@ class Posts extends Component {
 
 
     componentDidMount(){
-        // call the method created above
-        this.loadPosts();
+        this.setState({
+            posts:[]
+        })
+        
+        this.loadPosts();  // call the method created above
     }
     render() {
+
+        const {posts} = this.state
+
+        console.log(this.state)
         return (
             <div>
                 <h1>this  is the posts home</h1>
+                {/* {posts.length >0 ? '':<p>No posts pound!!</p>} */}
+                
+                {posts.length > 0 ? posts.map((postItem, index)=>{
+                    return(
+                        <PostInline post={postItem}/>
+                    )
+
+                }):<p>No posts pound!!</p>}
             </div>
         );
     }
