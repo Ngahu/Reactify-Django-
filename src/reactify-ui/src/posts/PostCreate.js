@@ -5,40 +5,18 @@ class PostCreate extends Component {
     constructor(props) {
         super(props);
 
-    }
-
-    componentWillMount() {
+        this.handleSubmit = this.handleSubmit.bind(this)
 
     }
 
-    componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-    componentWillUnmount() {
-
+    handleSubmit(event){
+        event.preventDefault()
     }
 
     render() {
         return (
             
-                <form className='col-md-6'>
+                <form className='col-md-12' onSubmit={this.handleSubmit}>
                     <div className='form-group'>
                     <label for='title'>Post Title</label>
                     <input type='text' id='title' name='title' className='form-control' placeholder='Blog post title' />
